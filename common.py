@@ -13,8 +13,8 @@ def calc_indice(tab,poids):
     cles = list(poids.keys())
     for cle in cles:
         col=table[cle]
-        mini=col.min
-        maxi=col.max
+        mini=col.min()
+        maxi=col.max()
         scale=maxi-mini
         table[cle]+= (col-mini)/scale
 

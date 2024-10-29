@@ -30,7 +30,7 @@ df = pd.read_excel('DataForTable2023.xls')
 # %%
 df.head(5)
 
-# %%
+# %% jupyter={"source_hidden": true}
 country = 'Country name'
 year = 'year'
 happiness = 'Life Ladder'
@@ -111,3 +111,59 @@ fig.tight_layout()  # Adjust layout to prevent clipping
 plt.show()
 
 # %%
+df_perceived_happiness = pd.read_csv('happiness-cantril-ladder.csv')
+df_perceived_happiness.head()
+perception = 'Cantril ladder score'
+
+# %%
+df_perceived_happiness.describe()
+
+# %%
+mixed_df = pd.merge(left=df,right=df_perceived_happiness,left_on=[country,year],right_on=['Entity','Year'])
+
+# %%
+mixed_df
+
+# %%
+mixed_df.drop(columns = ['Entity','Code','Year'],axis = 1,inplace=True)
+
+# %%
+mixed_df[happiness].mean()
+
+# %%
+mixed_df[perception].mean()
+
+# %%
+moyenne_pays = mixed_df.groupby(country).mean()
+
+# %%
+difference = moyenne_pays[happiness]-moyenne_pays[perception]
+difference.describe()
+
+# %% [markdown]
+# Ici on vient de comparer la donnée de happiness donnée par le report de World Hapiness avec une donée qui se base sur la perception des habitants des différents pays de leur vie. La moyenne étant tres faible, ces valeurs sont de maniere generale similaires. Cependant, puisque la std est importante, ...
+
+# %%
+mean = 0.011828
+std = 0.123801
+list(moyenne_pays[ (difference - mean).abs() > std ].index)
+
+# %%
+moyenne_pays['ecart'] = difference - mean
+
+# %%
+difference - mean
+
+# %%
+sorted_df = moyenne_pays.sort_values(by= GDP)
+sorted_df.head()
+
+# %%
+sorted_df.reset_index(drop=False, inplace=True)
+
+# %%
+sorted_df.moyenne_pays
+
+# %%
+plt.scatter(sorted_df.index,sorted_df[GDP],c=sorted_df['ecart'])
+plt.colorbar()
