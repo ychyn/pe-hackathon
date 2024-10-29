@@ -1,3 +1,8 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 def calc_indice(tab,poids):
     #rescale data + calc indice
     #poids doit être de la forme {"Life Ladder":0.123,"Log GDP":0.2767, ... }
@@ -20,3 +25,11 @@ def calc_indice(tab,poids):
         table["indice"]+=poids[cle]*col
 
     return table
+
+
+
+# Milan
+Data= pd.read_excel('DataForTable2023.xls')
+NOMS=list(Data.columns)   #les noms des colonnes
+PAYS=Data['Country name'].unique() 
+
