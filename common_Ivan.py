@@ -30,7 +30,7 @@ df = pd.read_excel('DataForTable2023.xls')
 # %%
 df.head(5)
 
-# %%
+# %% jupyter={"source_hidden": true}
 country = 'Country name'
 year = 'year'
 happiness = 'Life Ladder'
